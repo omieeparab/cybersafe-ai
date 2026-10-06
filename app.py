@@ -17,7 +17,7 @@ def load_users():
     # create default file if missing
     if not os.path.exists(USERS_FILE):
         with open(USERS_FILE, "w") as f:
-        json.dump({}, f)
+            json.dump({}, f)
 
     # load and normalize older formats where user -> password string
     with open(USERS_FILE, "r") as f:
