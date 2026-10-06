@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Legal Guidance - CyberSafe AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='legal.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>⚖️ Legal Guidance</h1>
+            <p>Know your rights and legal remedies in cyberspace.</p>
+        </header>
+
+        <!-- Cards Section -->
+        <section class="card-section">
+            <h2>📄 Legal Guidance Topics</h2>
+            <div class="cards">
+                <div class="card">
+                    <h2>Cyber Laws in India</h2>
+                    <p>The Information Technology Act, 2000 regulates cybercrimes and online fraud. Understand your rights and responsibilities online.</p>
+                </div>
+                <div class="card">
+                    <h2>Report Cybercrime</h2>
+                    <p>You can file complaints on the official <a href="https://cybercrime.gov.in" target="_blank">Cybercrime Portal</a> for hacking, phishing, or online harassment.</p>
+                </div>
+                <div class="card">
+                    <h2>Legal Support</h2>
+                    <p>Consult cyber law experts for fraud cases, identity theft, or online harassment. Seek professional advice to protect yourself digitally.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back Button -->
+        <a href="{{ url_for('dashboard') }}" class="back-btn">⬅ Back to Dashboard</a>
+    </div>
+</body>
+</html>

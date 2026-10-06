@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CyberSafe AI - Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("{{ url_for('static', filename='cyber_bg.jpg') }}") no-repeat center center/cover;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(5px);
+      z-index: 0;
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 2;
+      width: 380px;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      padding: 45px 40px 35px 40px; /* bottom padding slightly smaller */
+      text-align: center;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-icon {
+      width: 55px; height: 55px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px auto;
+      font-size: 24px;
+      color: #1565c0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .heading { font-weight: 700; font-size: 24px; color: #1a237e; margin-bottom: 10px; }
+    .subtext { font-size: 14px; color: #455a64; margin-bottom: 25px; text-align: justify; }
+
+    .input {
+      width: 100%; padding: 12px 15px;
+      border-radius: 12px; border: 1px solid #cfd8dc;
+      margin-top: 12px; font-size: 15px; color: #37474f;
+      background: rgba(255,255,255,0.9); transition: all 0.3s ease;
+    }
+
+    .input:focus { outline: none; border-color: #90caf9; background: #ffffff; box-shadow: 0 0 8px rgba(144,202,249,0.5); }
+    .input.invalid { border-color: #e53935; background: #ffe5e5; }
+
+    /* Smaller, centered login button */
+    .login-button {
+      width: 60%;
+      max-width: 200px;
+      padding: 12px;
+      margin: 25px auto 0 auto;
+      display: block;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1565c0, #64b5f6);
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(21,101,192,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .login-button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 25px rgba(21,101,192,0.6);
+    }
+
+    .forgot { text-align: right; font-size: 13px; margin-top: 10px; }
+    .forgot a { text-decoration: none; color: #1976d2; font-weight: 500; }
+    .forgot a:hover { text-decoration: underline; }
+
+    .signup { margin-top: 20px; font-size: 14px; color: #455a64; }
+    .signup a { color: #1565c0; text-decoration: none; font-weight: 600; }
+    .signup a:hover { text-decoration: underline; }
+
+    .error, .flash-message {
+      color: #e53935; margin-top: 10px; font-weight: 600; text-align: center;
+    }
+    .flash-success { color: #43a047; }
+
+    .attempts-info {
+      color: #ff6f00; font-size: 13px; margin-top: 5px; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-icon">🔐</div>
+    <div class="heading">Sign in to CyberSafe AI</div>
+    <div class="subtext">Secure your digital world with AI-powered cybersecurity.</div>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <p class="flash-message {{ 'flash-success' if category=='success' else '' }}">{{ msg }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Error message -->
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <!-- Remaining attempts info -->
+    {% if remaining_attempts is defined %}
+      <p class="attempts-info">Remaining attempts: {{ remaining_attempts }}</p>
+    {% endif %}
+
+    <!-- Login form -->
+    <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+      <input class="input" type="text" name="username" placeholder="Username" required>
+      <input class="input" type="password" name="password" placeholder="Password" required>
+      <div class="forgot"><a href="{{ url_for('forgot_password') }}">Forgot password?</a></div>
+      <button class="login-button" type="submit">Login</button>
+    </form>
+
+    <div class="signup">Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+/* ------------------ General ------------------ */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    background: linear-gradient(120deg, #dfe9f3, #ffffff);
+    color: #2c3e50;
+    min-height: 100vh;
+}
+
+/* ------------------ Sidebar ------------------ */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #0a2647, #144272);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #00c6ff;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 12px;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(6px);
+}
+
+/* ------------------ Main Content ------------------ */
+.main-content {
+    flex: 1;
+    padding: 40px 50px;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f9fbfd, #e3f2fd);
+}
+
+/* ------------------ Header ------------------ */
+header {
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 30px;
+    color: #0072ff;
+    margin-bottom: 5px;
+}
+
+header p {
+    color: #5a6b7b;
+}
+
+/* ------------------ Card Section ------------------ */
+.card-section {
+    margin-bottom: 50px;
+}
+
+.card-section h2 {
+    color: #144272;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-left: 5px solid #0072ff;
+    padding-left: 10px;
+}
+
+/* Cards layout */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+    color: #0072ff;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #444;
+    font-size: 14.5px;
+    line-height: 1.5;
+}
+
+/* ------------------ Buttons ------------------ */
+button, .btn {
+    background: linear-gradient(135deg, #0072ff, #00c6ff);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 114, 255, 0.4);
+}
+
+/* ------------------ Form ------------------ */
+form input[type="text"] {
+    width: 70%;
+    padding: 12px;
+    margin-right: 10px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+form input[type="text"]:focus {
+    border-color: #0072ff;
+    box-shadow: 0 0 6px rgba(0, 114, 255, 0.4);
+}
+
+/* ------------------ Result ------------------ */
+.result {
+    margin-top: 15px;
+    font-weight: 600;
+    color: #0072ff;
+}
+
+/* ------------------ Responsive ------------------ */
+@media screen and (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        box-shadow: none;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}

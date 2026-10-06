@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - 🛡️CyberSafe AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <style>
+    /* Simple pastel dashboard look */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      height: 100vh;
+      background: linear-gradient(135deg, #e0f0ff, #f0e8ff);
+      color: #222;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 230px;
+      background: #ffffffa0;
+      backdrop-filter: blur(10px);
+      padding: 25px 15px;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #4a47a3;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      background: #f9f9ff;
+      padding: 10px 15px;
+      border-radius: 10px;
+      transition: 0.3s;
+      border: 1px solid #e4e4ff;
+    }
+
+    .sidebar ul li a:hover {
+      background: #d6e0ff;
+      color: #111;
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #2b2a6b;
+    }
+
+    header p {
+      margin-top: 0;
+      color: #666;
+    }
+
+    /* Section Cards */
+    .card-section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      margin-bottom: 35px;
+    }
+
+    .card-section h2 {
+      color: #3f3d7d;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: #f9f9ff;
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid #ecebff;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #3b3a80;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 15px;
+      background: linear-gradient(135deg, #6f42c1, #0d6efd);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    /* URL Form */
+    form {
+      margin-top: 10px;
+    }
+
+    input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-right: 10px;
+      outline: none;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #0d6efd;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0b5ed7;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2> 🛡️CyberSafe AI</h2>
+    <ul>
+      <li><a href="{{ url_for('awareness') }}">📚 Awareness Hub</a></li>
+      <li><a href="{{ url_for('legal') }}">⚖️ Legal Guidance</a></li>
+      <li><a href="{{ url_for('url_detection') }}">🔗 URL Detection</a></li>
+      <li><a href="{{ url_for('logout') }}">🚪 Logout</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header>
+      <h1>Welcome to CyberSafe AI</h1>
+      <p>Your digital safety companion</p>
+    </header>
+
+    <!-- Awareness Hub -->
+    <section class="card-section">
+      <h2>📚 Awareness Hub</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Strong Passwords</h3>
+          <p>Create strong passwords with letters, numbers, and symbols.</p>
+        </div>
+        <div class="card">
+          <h3>Phishing Awareness</h3>
+          <p>Learn to identify phishing emails and unsafe links.</p>
+        </div>
+        <div class="card">
+          <h3>Safe Browsing</h3>
+          <p>Use HTTPS and avoid unsecured public Wi-Fi.</p>
+        </div>
+      </div>
+      <a href="{{ url_for('awareness') }}" class="btn">Explore Awareness Hub</a>
+    </section>
+
+    <!-- Legal Guidance -->
+    <section class="card-section">
+      <h2>⚖️ Legal Guidance</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Cyber Laws</h3>
+          <p>Understand Indian IT laws and regulations for online safety.</p>
+        </div>
+        <div class="card">
+          <h3>Report Cybercrime</h3>
+          <p>File complaints on the official Cybercrime portal.</p>
+        </div>
+        <div class="card">
+          <h3>Legal Support</h3>
+          <p>Consult cyber law experts for fraud and harassment cases.</p>
+        </div>
+      </div>
+      <a href="{{ url_for('legal') }}" class="btn">Learn More</a>
+    </section>
+
+    <!-- URL Detection -->
+    <section class="card-section">
+      <h2>🔗 URL Detection Tool</h2>
+      <p>Check if a link is safe before visiting:</p>
+      <form method="POST" action="{{ url_for('url_detection') }}">
+        <input type="text" name="url" placeholder="Enter URL" required>
+        <button type="submit">Check</button>
+      </form>
+      {% if result %}
+        <p class="result">{{ result }}</p>
+      {% endif %}
+      <a href="{{ url_for('url_detection') }}" class="btn">Advanced URL Checker</a>
+    </section>
+  </div>
+</body>
+</html>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/awareness.css') }}">

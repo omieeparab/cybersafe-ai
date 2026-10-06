@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CyberSafe AI - Sign Up</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("{{ url_for('static', filename='cyber_bg.jpg') }}") no-repeat center center/cover;
+    position: relative;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px);
+    z-index: 0;
+  }
+
+  .signup-card {
+    position: relative;
+    z-index: 2;
+    width: 400px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    padding: 45px 40px 35px 40px;
+    text-align: center;
+    animation: fadeIn 1.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .signup-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    font-size: 24px;
+    color: #1565c0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .heading { font-weight: 700; font-size: 24px; color: #1a237e; margin-bottom: 10px; }
+  .subtext { font-size: 14px; color: #455a64; margin-bottom: 25px; text-align: justify; }
+
+  .input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid #cfd8dc;
+    margin-top: 12px;
+    font-size: 15px;
+    color: #37474f;
+    background: rgba(255,255,255,0.9);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .input:focus {
+    outline: none;
+    border-color: #90caf9;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(144, 202, 249, 0.5);
+  }
+
+  .input.error {
+    border-color: #e53935 !important;
+    box-shadow: 0 0 8px rgba(229, 57, 53, 0.5);
+  }
+
+  /* Smaller, centered signup button */
+  .signup-button {
+    width: 60%;
+    max-width: 200px;
+    padding: 12px;
+    margin: 25px auto 0 auto;
+    display: block;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1565c0, #64b5f6);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(21, 101, 192, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .signup-button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(21, 101, 192, 0.6);
+  }
+
+  .login-link { margin-top: 25px; font-size: 14px; color: #455a64; }
+  .login-link a { color: #1565c0; text-decoration: none; font-weight: 600; }
+  .login-link a:hover { text-decoration: underline; }
+
+  .error, .flash-message { color: #e53935; margin-top: 10px; font-weight: 600; text-align: center; }
+  .flash-success { color: #43a047; }
+
+  #password-strength, #confirm-strength {
+    font-weight: 600;
+    margin-top: 5px;
+    text-align: left;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+<div class="signup-card">
+  <div class="signup-icon">🛡️</div>
+  <div class="heading">Create Your CyberSafe Account</div>
+  <div class="subtext">
+    Join CyberSafe AI to enhance your digital security awareness and protect your online identity.
+  </div>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form method="POST" action="{{ url_for('signup') }}" id="signupForm" novalidate>
+    <input class="input" type="text" name="username" placeholder="Username" required>
+    <input class="input" type="email" name="email" placeholder="Email Address" required>
+
+    <input class="input" type="password" name="password" id="password" placeholder="Password" required>
+    <div id="password-strength"></div>
+
+    <input class="input" type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+    <div id="confirm-strength"></div>
+
+    <p class="error" id="clientError" style="display:none;"></p>
+    <button class="signup-button" type="submit">Sign Up</button>
+  </form>
+
+  <div class="login-link">
+    Already have an account? <a href="{{ url_for('login') }}">Login</a>
+  </div>
+</div>
+
+<script>
+// JavaScript for password strength & form validation (same as before)
+const form = document.getElementById("signupForm");
+const usernameField = form.querySelector("input[name='username']");
+const emailField = form.querySelector("input[name='email']");
+const passwordField = document.getElementById("password");
+const confirmField = document.getElementById("confirm_password");
+const errorDiv = document.getElementById("clientError");
+const passwordStrength = document.getElementById("password-strength");
+const confirmStrength = document.getElementById("confirm-strength");
+
+function checkStrength(password) {
+  let strength = 0;
+  if(password.length >= 10) strength++;
+  if(password.match(/[A-Z]/)) strength++;
+  if(password.match(/[a-z]/)) strength++;
+  if(password.match(/\d/)) strength++;
+  if(password.match(/[!@#$%^&*()_\-+=<>?]/)) strength++;
+
+  if(strength <= 2) return {text: "Weak", color: "red"};
+  if(strength <= 4) return {text: "Good", color: "orange"};
+  return {text: "Strong", color: "green"};
+}
+
+passwordField.addEventListener("input", () => {
+  const result = checkStrength(passwordField.value);
+  passwordStrength.textContent = result.text;
+  passwordStrength.style.color = result.color;
+
+  if(confirmField.value) {
+    if(confirmField.value !== passwordField.value) {
+      confirmStrength.textContent = "Passwords do not match";
+      confirmStrength.style.color = "red";
+    } else {
+      const res = checkStrength(confirmField.value);
+      confirmStrength.textContent = res.text;
+      confirmStrength.style.color = res.color;
+    }
+  }
+});
+
+confirmField.addEventListener("input", () => {
+  if(confirmField.value !== passwordField.value) {
+    confirmStrength.textContent = "Passwords do not match";
+    confirmStrength.style.color = "red";
+  } else {
+    const result = checkStrength(confirmField.value);
+    confirmStrength.textContent = result.text;
+    confirmStrength.style.color = result.color;
+  }
+});
+
+form.addEventListener("submit", (event) => {
+  let valid = true;
+  let errorMsg = "";
+  [usernameField, emailField, passwordField, confirmField].forEach(f => f.classList.remove("error"));
+
+  const usernamePattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=<>?]).{3,}$/;
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=<>?]).{10,}$/;
+
+  const username = usernameField.value.trim();
+  const email = emailField.value.trim();
+  const password = passwordField.value;
+  const confirm = confirmField.value;
+
+  if(!usernamePattern.test(username)) {
+    valid = false;
+    usernameField.classList.add("error");
+    errorMsg = "Username must include letters, numbers, and at least one special character (!@#$%^&*()_+-=<>?).";
+  } else if(!/\S+@\S+\.\S+/.test(email)) {
+    valid = false;
+    emailField.classList.add("error");
+    errorMsg = "Please enter a valid email address.";
+  } else if(!passwordPattern.test(password)) {
+    valid = false;
+    passwordField.classList.add("error");
+    errorMsg = "Password must be at least 10 characters long and include uppercase, lowercase, numbers & special character.";
+  } else if(password !== confirm) {
+    valid = false;
+    confirmField.classList.add("error");
+    errorMsg = "Passwords do not match.";
+  }
+
+  if(!valid) {
+    event.preventDefault();
+    errorDiv.textContent = errorMsg;
+    errorDiv.style.display = "block";
+  } else {
+    errorDiv.style.display = "none";
+  }
+});
+</script>
+</body>
+</html>

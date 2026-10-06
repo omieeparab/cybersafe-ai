@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awareness Hub - CyberSafe AI</title>
+    <link rel="stylesheet" href="static/awareness.css">
+  <!-- CSS: dashboard + awareness with cache-busting -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css', v=timestamp) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/awareness.css', v=timestamp) }}">
+</head>
+<body>
+
+  <div class="main-content" role="main">
+
+    <!-- Header -->
+    <header>
+      <h1>📚 Awareness Hub</h1>
+      <p>Stay updated with the latest cybersecurity practices.</p>
+    </header>
+
+    <!-- Video Section -->
+    <section id="awareness-video" class="card-section">
+      <h2>🎬 Cybersecurity Video</h2>
+      <div class="video-container">
+        <div class="video-wrap">
+          <figure>
+            <video id="cyberVideo" controls playsinline preload="metadata"
+                   poster="{{ url_for('static', filename='images/video-poster.jpg') }}"
+                   aria-label="Cybersecurity awareness video"
+                   controlsList="nodownload">
+              <source id="cyberSource" src="{{ video_url }}" type="video/mp4">
+              <track kind="captions" srclang="en" label="English" src="{{ url_for('static', filename='videos/cyber.vtt') }}">
+              Your browser does not support the video tag.
+            </video>
+            <figcaption>Intro to basic cybersecurity best practices.</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="video-links">
+        <a href="{{ local_video }}" target="_blank">Open raw video</a>
+        &nbsp;•&nbsp;
+        <a href="https://cybercrime.gov.in/UploadMedia/Videos/5.mp4" class="load-into-player">Original source (external)</a>
+      </div>
+    </section>
+
+    <!-- Real-Life Stories -->
+    <section id="awareness-story" class="card-section">
+      <h2>📖 Real-Life Cybersecurity Stories</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Phishing Attack Example</h3>
+          <p>Rahul received an email that looked like his bank, asking to reset his password. He clicked the link and lost access to his account. Lesson: Always verify the sender and never share OTPs.</p>
+        </div>
+        <div class="card">
+          <h3>Strong Password Success</h3>
+          <p>Neha used a password manager to secure all her accounts. Even when one platform was hacked, her other accounts remained safe.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Tips -->
+    <section id="awareness-tips" class="card-section">
+      <h2>💡 Quick Tips</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Use 2FA</h3>
+          <p>Enable Two-Factor Authentication on all important accounts.</p>
+        </div>
+        <div class="card">
+          <h3>Check URLs</h3>
+          <p>Always verify a URL before clicking. Hover and inspect the domain carefully.</p>
+        </div>
+        <div class="card">
+          <h3>Regular Updates</h3>
+          <p>Keep your software and apps updated to patch vulnerabilities.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to Dashboard -->
+    <a href="{{ url_for('dashboard') }}" class="btn">⬅ Back to Dashboard</a>
+
+  </div>
+
+  <!-- JS: Load external video into player -->
+  <script>
+    (function () {
+      const video = document.getElementById('cyberVideo');
+      const source = document.getElementById('cyberSource');
+
+      function loadAndPlay(url) {
+        if (!url) return;
+        source.src = url;
+        video.load();
+        video.play().catch(() => {});
+      }
+
+      document.querySelectorAll('a.load-into-player').forEach(a => {
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          loadAndPlay(this.href);
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
